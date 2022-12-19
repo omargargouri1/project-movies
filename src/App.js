@@ -4,6 +4,9 @@ import { moviesData } from './data'
 import './App.css'
 import Search from './components/Search'
 import AddMovie from './components/AddMovie'
+import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import Description from './Description'
+
 
 const App = () => {
   const [movies, setMovies] = useState(moviesData)
@@ -16,8 +19,14 @@ const App = () => {
   return (
     <div className='App'>
       <AddMovie Add={handleAdd}/>
+      <BrowserRouter>
       <Search text={text} handleText={handleText} rating={rating} handleRating={handleRating}/>
-      <MovieList movies={movies.filter(el=>el.name.toLowerCase().includes(text.toLowerCase())&& el.rating>=rating)}/>
+      <Routes>
+      <Route path='/' element={<MovieList movies={movies.filter(el=>el.name.toLowerCase().includes(text.toLowerCase())&& el.rating>=rating)}/>}/>
+      <Route path='/trailer/:id' element={<Description movies={movies}/>}/>
+      
+      </Routes>
+      </BrowserRouter>
     </div>
   )
 }
